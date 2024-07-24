@@ -162,11 +162,12 @@ public class ChannelFactory {
 
     private ChannelTypeUID getOrBuildNumberChannelType(String channelId, String unit, @Nullable BigDecimal min,
             @Nullable BigDecimal max, @Nullable BigDecimal step) {
-        final var channelTypeUID = new ChannelTypeUID(BINDING_ID, CHANNEL_TYPE_NUMERIC_PRFIX + channelId);
+        final var channelTypeUID = new ChannelTypeUID(BINDING_ID,
+                CHANNEL_TYPE_PREFIX_RW + CHANNEL_TYPE_NUMERIC_PRFIX + channelId);
         var type = channelTypeRegistry.getChannelType(channelTypeUID);
 
         if (type == null) {
-            var stateBuilder = StateDescriptionFragmentBuilder.create();
+            var stateBuilder = StateDescriptionFragmentBuilder.create().withReadOnly(false);
 
             if (min != null) {
                 stateBuilder.withMinimum(min);
